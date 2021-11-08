@@ -59,3 +59,21 @@ class Stream(dict):
         if not match or not match.group(1):
             raise Exception('Cannot parse stream partition from stream data: {}'.format(self))
         return match.group(1)
+
+
+class TestEvent(dict):
+    """Test event is sent to backends that accept it after the application is properly initialized. This allows customers to visualy see the event has been delivered."""
+    @property
+    def offset(self):
+        return 0
+
+    @property
+    def cloud_provider(self):
+        return "GCP"
+
+    @property
+    def mdm_identifier(self):
+        return None
+
+    @property
+    def 

@@ -24,6 +24,7 @@ class Backends():
             raise Exception("No Backend enabled. Exiting.")
 
     def process(self, falcon_event):
+        # Regular falcon events
         for runtime in self.runtimes:
             if runtime.is_relevant(falcon_event):
                 runtime.process(falcon_event)

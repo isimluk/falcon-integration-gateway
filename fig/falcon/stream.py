@@ -5,7 +5,7 @@ import threading
 import requests
 
 from .api import FalconAPI, NoStreamsError
-from .models import Event, Stream
+from .models import Event, Stream, TestEvent
 from ..util import StoppableThread
 from ..log import log
 from ..config import config
@@ -87,6 +87,7 @@ class StreamingThread(StoppableThread):
 
     def run(self):
         try:
+            self.send_test_event()
             for event in self.conn.events():
                 if event:
                     self.process_event(event)
@@ -106,6 +107,9 @@ class StreamingThread(StoppableThread):
         event = Event(event)
         if not event.irrelevant():
             self.queue.put(event)
+
+    def send_test_event(self):
+        self.queue.put(TestEvent())
 
 
 class StreamingConnection():
